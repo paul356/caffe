@@ -405,6 +405,36 @@ message LayerParameter {
   optional ThresholdParameter threshold_param = 128;
   optional TileParameter tile_param = 138;
   optional WindowDataParameter window_data_param = 129;
+
+  optional SoftmaxWithLossMaskParameter softmax_mask_param = 900;
+  optional ChannelDropoutParameter Channel_dropout_param = 901;
+  optional LabelMixLayerParameter label_mix_param = 902;
+  optional BNParameter bn_param = 903;
+}
+
+message BNParameter {
+  optional FillerParameter slope_filler = 1;
+  optional FillerParameter bias_filler = 2;
+  optional bool moving_average = 3 [default = true];
+  optional float momentum = 4 [default = 0.9];
+  optional float eps = 5 [default = 1e-7];
+}
+
+message LabelMixLayerParameter {
+  optional float mix_num = 1 [default = 13]; // 13 mixture types
+}
+
+message SoftmaxWithLossMaskParameter
+{
+  optional bool use_inria = 1 [default = false]; // default not use inria negative sample
+  optional float inria_neg_ratio = 2 [default = 0.01];
+  optional bool use_neg = 3 [default = false]; // default not use negative sample within the image
+  optional float neg_ratio = 4 [default = 0.1]; // by default the influence of negative sample is 0.5
+  optional float neg_weight = 5 [default = 0.2]; 
+}
+
+message ChannelDropoutParameter {
+  optional float dropout_ratio = 1 [default = 0.5]; // dropout ratio
 }
 
 // Message that stores parameters used to apply transformation
